@@ -7,10 +7,14 @@ from aiogram.types import Message
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
 from aiohttp import web
 import requests
-import ssl
 import os
+from dotenv import load_dotenv
 
-from config import TOKEN, THE_CAT_API_KEY
+
+# Загрузка токена
+load_dotenv()
+TOKEN = os.getenv("TOKEN")
+THE_CAT_API_KEY = os.getenv("THE_CAT_API_KEY")
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
