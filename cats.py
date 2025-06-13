@@ -20,7 +20,7 @@ bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
 WEBHOOK_PATH = "/webhook"
-WEBHOOK_URL = "https://tg05-lesson-cat-proba.onrender.com" + WEBHOOK_PATH
+BASE_WEBHOOK_URL = "https://tg05-lesson-cat-proba.onrender.com"
 
 def get_cat_breeds():
     url = "https://api.thecatapi.com/v1/breeds"
@@ -62,36 +62,32 @@ async def send_cat_info(message: Message):
         await message.answer("Порода не найдена. Попробуйте еще раз.")
 
 async def on_startup(bot: Bot):
-    await bot.set_webhook(WEBHOOK_URL)
-
-async def on_shutdown(bot: Bot):
-    await bot.delete_webhook()
+    await bot.set_webhook(f"{BASE_WEBHOOK_URL}{WEBHOOK_PATH}")
 
 async def main():
-    # Если запускаем локально - используем polling
-    import os
-    if os.getenv("RENDER"):
-        # Настройка webhook для Render
-        app = web.Application()
-        webhook_requests_handler = SimpleRequestHandler(
-            dispatcher=dp,
-            bot=bot,
-        )
-        webhook_requests_handler.register(app, path=WEBHOOK_PATH)
-        setup_application(app, dp, bot=bot)
-        
-        await on_startup(bot)
-        return app
-    else:
-        # Локальный запуск с polling
-        await dp.start_polling(bot)
+    # Настройка веб-приложения
+    app = web.Application()
+    
+    # Создаем обработчик вебхуков
+    webhook_requests_handler = SimpleRequestHandler(
+        dispatcher=dp,
+        bot=bot,
+    )
+    
+    # Регистрируем обработчик по указанному пути
+    webhook_requests_handler.register(app, path=WEBHOOK_PATH)
+    
+    # Монтируем диспетчер в приложение
+    setup_application(app, dp, bot=bot)
+    
+    # Запускаем веб-сервер
+    return app
 
 if __name__ == '__main__':
-    # Проверяем, запущен ли код на Render
-    if os.getenv("RENDER"):
-        # Запуск asyncio event loop для webhook
+    if os.getenv('RENDER'):
+        # Настройка для Render
         app = asyncio.run(main())
         web.run_app(app, host="0.0.0.0", port=10000)
     else:
-        # Локальный запуск
-        asyncio.run(main())
+        # Локальный запуск с polling
+        asyncio.run(dp.start_polling(bot))
