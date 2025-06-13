@@ -8,7 +8,7 @@ from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_applicati
 from aiohttp import web
 import requests
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenv 
 
 
 # Загрузка токена
