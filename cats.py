@@ -28,6 +28,8 @@ WEBHOOK_PATH = "/webhook"
 BASE_WEBHOOK_URL = "https://tg05-lesson-cat-proba.onrender.com"
 
 
+
+
 CITIES = ['Москва', 'Санкт-Петербург', 'Рига', 'Лос-Анджелес', 'Ницца', 'Лондон']
 
 
@@ -90,7 +92,7 @@ async def handle_start(message: Message):
 
 
 # === WEBHOOK ===
-async def on_startup(bot: Bot):
+"""async def on_startup(bot: Bot):
     if USE_WEBHOOK:
         await bot.set_webhook(f"{WEBHOOK_URL}{WEBHOOK_PATH}")
 
@@ -105,13 +107,6 @@ async def main():
     return app
 
 
-
-
-
-
-
-
-
 if __name__ == '__main__':
     if os.getenv('RENDER'):
         # Настройка для Render
@@ -119,8 +114,40 @@ if __name__ == '__main__':
         web.run_app(app, host="0.0.0.0", port=10000)
     else:
         # Локальный запуск с polling
+        asyncio.run(dp.start_polling(bot))"""
+        
+        
+        
+        
+        
+async def on_startup(bot: Bot):
+    await bot.set_webhook(f"{BASE_WEBHOOK_URL}{WEBHOOK_PATH}")
+
+async def main():
+    # Настройка веб-приложения
+    app = web.Application()
+    
+    # Создаем обработчик вебхуков
+    webhook_requests_handler = SimpleRequestHandler(
+        dispatcher=dp,
+        bot=bot,
+    )
+    
+    # Регистрируем обработчик по указанному пути
+    webhook_requests_handler.register(app, path=WEBHOOK_PATH)
+    
+    # Монтируем диспетчер в приложение
+    setup_application(app, dp, bot=bot)
+    
+    # Запускаем веб-сервер
+    return app
+
+if __name__ == '__main__':
+    if os.getenv('RENDER'):
+        # Настройка для Render
+        app = asyncio.run(main())
+        web.run_app(app, host="0.0.0.0", port=10000)
+    else:    
+        # Локальный запуск с polling
         asyncio.run(dp.start_polling(bot))
-        
-        
-        
         
