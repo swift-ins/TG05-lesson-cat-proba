@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
 THE_CAT_API_KEY = os.getenv("THE_CAT_API_KEY")
-
+API_KEY = THE_CAT_API_KEY
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
