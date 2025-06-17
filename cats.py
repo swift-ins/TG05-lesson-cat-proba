@@ -18,13 +18,13 @@ from aiohttp import web                                                         
 load_dotenv()                                                                     #
 TOKEN = os.getenv("TOKEN")                                                        #
 API_KEY = os.getenv("API_KEY")                                                    #
+WEBHOOK_URL = os.getenv("WEBHOOK_URL")                                            #
 bot = Bot(token=TOKEN)                                                            #
 dp = Dispatcher()                                                                 #
 WEBHOOK_PATH = "/webhook"                                                         #
                                                                                   #
 ###################################################################################
 
-BASE_WEBHOOK_URL = 'https://tg05-lesson-cat-proba.onrender.com'
 
 
 
@@ -93,7 +93,7 @@ async def handle_start(message: Message):
 # === WEBHOOK ===
      
 async def on_startup(bot: Bot):
-    await bot.set_webhook(f"{BASE_WEBHOOK_URL}{WEBHOOK_PATH}")
+    await bot.set_webhook(f"{WEBHOOK_URL}{WEBHOOK_PATH}")
 
 async def main():
     # Настройка веб-приложения
