@@ -1,4 +1,5 @@
 aiogram
-requests
 aiohttp
+requests
 python-dotenv
+
