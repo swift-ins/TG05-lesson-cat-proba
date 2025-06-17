@@ -28,7 +28,7 @@ WEBHOOK_PATH = "/webhook"
 BASE_WEBHOOK_URL = "https://tg05-lesson-cat-proba.onrender.com"
 
 
-CITIES = ['Москва', 'Севастополь', 'Рига', 'Лос-Анджелес']
+CITIES = ['Москва', 'Санкт-Петербург', 'Рига', 'Лос-Анджелес', 'Ницца', 'Лондон']
 
 
 def get_weather_report(city):
