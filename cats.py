@@ -1,10 +1,10 @@
 #https://tg05-lesson-cat-proba.onrender.com
 
-import os
-from datetime import datetime, timedelta
+
 
 
 ###################################################################################
+import os
 import asyncio                                                                    #
 import requests                                                                   #
 from dotenv import load_dotenv                                                    #
@@ -25,11 +25,9 @@ WEBHOOK_PATH = "/webhook"                                                       
                                                                                   #
 ###################################################################################
 
+from datetime import datetime, timedelta
 
-
-
-
-CITIES = ['Москва', 'Санкт-Петербург', 'Рига', 'Лос-Анджелес', 'Ницца', 'Лондон', 'Аликанте']
+CITIES = ['Москва', 'Санкт-Петербург', 'Рига', 'Лос-Анджелес', 'Аликанте']
 
 
 def get_weather_report(city):
