@@ -27,7 +27,7 @@ WEBHOOK_PATH = "/webhook"                                                       
 
 from datetime import datetime, timedelta
 
-CITIES = ['Москва', 'Санкт-Петербург', 'Рига', 'Лос-Анджелес', 'Аликанте']
+CITIES = ['Москва', 'Санкт-Петербург', 'Рига', 'Аликанте']
 
 
 def get_weather_report(city):
